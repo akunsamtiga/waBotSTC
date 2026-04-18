@@ -257,6 +257,31 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         asyncio.create_task(auto_delete(sent2, 300))
         return
 
+    vip_keywords = [
+        "vip", "join vip", "cara join vip", "cara masuk vip",
+        "group vip", "grup vip", "vip group",
+        "masuk vip", "gabung vip"
+    ]
+    if any(k in text for k in vip_keywords):
+        keyboard = [[InlineKeyboardButton("Hubungi admin", url=ADMIN)]]
+        sent = await msg.reply_text(
+            " *AKSES VIP STC AUTOTRADE*\n\n"
+            "Untuk masuk VIP group pastikan akun kamu sudah teraktivasi di STC Autotrade.\n"
+            "Silahkan hubungi admin untuk aktivasi.\n\n"
+            "*Keuntungan masuk VIP:*\n\n"
+            "1. Edukasi trading\n"
+            "2. Materi Trading\n"
+            "3. Robot autotrade permanent free\n"
+            "4. Signal EA full 24 jam\n"
+            "5. Signal Realtime update setiap hari\n"
+            "6. Trading bareng dengan 6 mentor pilihan\n\n"
+            " *Segera gabung VIP Sekarang (GRATIS)*",
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+        asyncio.create_task(auto_delete(sent, 120))
+        return
+
     if re.search(r"\b\d{6,12}\b", text or ""):
         keyboard = [[InlineKeyboardButton("Kirim ID ke admin", url=ADMIN)]]
         sent = await msg.reply_text(
