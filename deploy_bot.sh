@@ -233,11 +233,15 @@ async def install_apk_button(update: Update, context: ContextTypes.DEFAULT_TYPE)
     asyncio.create_task(auto_delete(sent1, 120))
     asyncio.create_task(auto_delete(sent2, 300))
 
-# ===== HANDLE PESAN =====
+# ======================================================
+# ===== HANDLE PESAN (FULL + VIP ANTI TYPO) =====
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    import re
     msg  = update.message
     text = msg.text.lower() if msg.text else ""
 
+    # ======================================================
+    #  AUTO RESPON KEYWORD APK
     keywords = [
         "install","instal","intal","insall","instaal","instl",
         "download","donlod","donwload","dwnload","dwonload",
@@ -245,23 +249,42 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "app","apps","application","unduh","pasang","setup"
     ]
     pattern = r"(inst|insal|instal|apk|aplikasi|download|donlod|app)"
-
     if any(k in text for k in keywords) or re.search(pattern, text):
         keyboard = [[InlineKeyboardButton("Aktivasi ke admin", url=ADMIN)]]
         sent1 = await msg.reply_text(
-            "Untuk download & install aplikasi STC autotrade pastikan Akun kamu sudah teraktivasi.\n\nKlik dan Install",
+            "Untuk download & install aplikasi STC autotrade pastikan Akun kamu sudah teraktivasi.\n\nKlik dan Install ",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
         sent2 = await msg.reply_document(APK_FILE_ID)
         asyncio.create_task(auto_delete(sent1, 120))
         asyncio.create_task(auto_delete(sent2, 300))
-        return
+        return  #  STOP
 
+    # ======================================================
+    #  AUTO RESPON VIP (ANTI TYPO)
     if text:
-        vip_keywords = ["vip", "join vip", "cara join vip", "cara masuk vip",
-                        "group vip", "grup vip", "vip group",
-                        "masuk vip", "gabung vip"]
-        if any(k in text for k in vip_keywords):
+        vip_patterns = [
+            r"\bvip\b",
+            r"v\s*i\s*p",
+            r"vj?p",
+            r"viip+",
+            r"veep",
+            r"fip",
+            r"join\s*v+i+p+",
+            r"gabung\s*v+i+p+",
+            r"masuk\s*v+i+p+",
+            r"cara\s*(join|masuk)?\s*v+i+p+",
+            r"grup\s*v+i+p+",
+            r"group\s*v+i+p+",
+            r"vip\s*group",
+            r"vip\s*grup",
+            r"grop\s*v+i+p+",
+            r"grub\s*v+i+p+",
+            r"masok\s*v+i+p+",
+            r"msk\s*v+i+p+",
+            r"jn\s*v+i+p+",
+        ]
+        if any(re.search(p, text) for p in vip_patterns):
             keyboard = [[InlineKeyboardButton("Hubungi admin", url=ADMIN)]]
             sent = await msg.reply_text(
                 " *AKSES VIP STC AUTOTRADE*\n\n"
@@ -279,33 +302,42 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 reply_markup=InlineKeyboardMarkup(keyboard)
             )
             asyncio.create_task(auto_delete(sent, 120))
-            return
+            return  #  STOP
 
-    if re.search(r"\b\d{6,12}\b", text or ""):
+    # ======================================================
+    #  DETEKSI ID (ANGKA 6–12 DIGIT)
+    match = re.search(r"\b\d{6,12}\b", text or "")
+    if match:
         keyboard = [[InlineKeyboardButton("Kirim ID ke admin", url=ADMIN)]]
         sent = await msg.reply_text(
-            "Silahkan kirimkan ID anda ke admin untuk proses aktivasi",
+            "Silahkan kirimkan ID anda ke admin untuk proses aktivasi ",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
         asyncio.create_task(auto_delete(sent, 120))
-        return
+        return  #  STOP
 
+    # ======================================================
+    #  FORWARD KE ADMIN
     await forward_to_admin(update, context)
 
+    # ======================================================
+    #  FILE ID LOGGER
     file_id = None
-    if msg.document:   file_id = msg.document.file_id
-    elif msg.video:    file_id = msg.video.file_id
-    elif msg.photo:    file_id = msg.photo[-1].file_id
-    elif msg.audio:    file_id = msg.audio.file_id
-    elif msg.voice:    file_id = msg.voice.file_id
-    elif msg.video_note: file_id = msg.video_note.file_id
-    elif msg.sticker:  file_id = msg.sticker.file_id
+    if msg.document:      file_id = msg.document.file_id
+    elif msg.video:       file_id = msg.video.file_id
+    elif msg.photo:       file_id = msg.photo[-1].file_id
+    elif msg.audio:       file_id = msg.audio.file_id
+    elif msg.voice:       file_id = msg.voice.file_id
+    elif msg.video_note:  file_id = msg.video_note.file_id
+    elif msg.sticker:     file_id = msg.sticker.file_id
 
     if file_id:
-        sent = await msg.reply_text(f"File ID:\n{file_id}")
+        sent = await msg.reply_text(f" File ID:\n{file_id}")
         asyncio.create_task(auto_delete(sent, 120))
         return
 
+    # ======================================================
+    #  MENU AWAL
     await menu_awal(update)
 
 # ===== BUTTON HANDLER =====
