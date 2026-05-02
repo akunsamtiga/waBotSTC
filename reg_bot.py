@@ -5,7 +5,7 @@ import json, os, asyncio, logging, re
 
 user_map = {}
 
-TOKEN         = "8753306751:AAGDtXS8ookbU6KDPO8R6uD8RiKBoL7FdPs"
+TOKEN         = "8624449565:AAHqQwaSpm0WjI3JJqSruhnhWcNKCY2Mduo"
 ADMIN         = "https://t.me/STC_01?text=Halo%20admin%20ini%20ID%20saya%20:"
 ADMIN_CHAT_ID = 7895551759
 
