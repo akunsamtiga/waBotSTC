@@ -9,7 +9,7 @@ TOKEN         = "8624449565:AAHqQwaSpm0WjI3JJqSruhnhWcNKCY2Mduo"
 ADMIN         = "https://t.me/STC_01?text=Halo%20admin%20ini%20ID%20saya%20:"
 ADMIN_CHAT_ID = 7895551759
 
-APK_FILE_ID = "BQACAgUAAxkBAAMJafXQ8CM4nnnvYHM5jh7P5X2tyQ4AAi4aAALgSrFXlb4pHC756IM7BA"
+APK_FILE_ID = "BQACAgUAAxkBAAIEZWoLtqWrfNgXeN0DJ5vhpo4FEjNZAAIIHQACsSRQVCZ3A5gORL9oOwQ"
 MENU_PHOTO  = "AgACAgUAAxkBAAMNafXUNstlGoS7w0lLK4ZguBzLNnwAAnkRaxvgSrFXn2mVkvxMn0wBAAMCAAN5AAM7BA"
 DATA_FILE   = "users.json"
 
@@ -296,7 +296,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton("Kirim ID ke admin", url=ADMIN)]
         ]
         sent = await query.message.reply_text(
-            "Silahkan lakukan pendaftaran akun baru klik link berikut :\n\nhttps://stcbroker.id\n\n"
+            "Silahkan lakukan pendaftaran akun baru klik link berikut :\n\nhttps://stockity.id/id?a=37051c9cbcfe&t=0#auth\n\n"
             "Setelah pendaftaran selesai, silahkan kirim ID akun contoh 180882779 kirim ke Admin.\n\n"
             "Untuk melihat ID akun silahkan lihat video klik disini :",
             reply_markup=InlineKeyboardMarkup(keyboard)
@@ -338,7 +338,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     elif data == "ubah_password":
         keyboard = [
-            [InlineKeyboardButton("Ubah Kata Sandi", url="https://stcbroker.id")],
+            [InlineKeyboardButton("Ubah Kata Sandi", url="https://stockity.id/id?a=37051c9cbcfe&t=0#auth")],
             [InlineKeyboardButton("Lihat Video", url="https://youtube.com/shorts/K54KC4Bbrw0?si=4lrFAqqJ5pD7uNmN")]
         ]
         sent = await query.message.reply_text(
@@ -356,7 +356,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "2. Wajib Tutup semua tab setelah blokir akun lama.\n"
             "https://youtube.com/shorts/MsbWd_OvGf8?si=QR0nLd0hqmXurEsf\n\n"
             "3. Kemudian Daftar akun baru klik disini\n\n"
-            "https://stcbroker.id\n\n"
+            "https://stockity.id/id?a=37051c9cbcfe&t=0#auth\n\n"
             "4. Jika sudah Kirimkan ID baru ke saya untuk aktivasi.",
             disable_web_page_preview=True
         )
